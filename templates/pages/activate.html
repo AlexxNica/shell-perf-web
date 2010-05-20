@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% if edit.confirmed %}
+<h2>System activated</h2>
+<div id="about">
+  <p>
+    The system {{ edit.name }} has now been activated.
+  </p>
+  <p>
+    <a href="system/{{ edit.name }}">View or administer system</a>.
+  </p>
+</div>
+{% else %}
+<h2>Confirm system registration</h2>
+<div id="about">
+  <p>
+    The following system has been registered. Please click on the link to confirm
+    the registration and activate the system for upload. The details below can
+    be edited once the system is activated.
+  </p>
+</div>
+<div id="infoGroup">
+  <div id="infoInner">
+    <form action="activate" method="post">
+      <div style="display: none">
+	<input type="hidden" name="edit" value="{{ edit.id }}" />
+	<input type="hidden" name="auth" value="{{ auth }}" />
+      </div>
+      <table>
+	<tr><td>Name: </td><td>{{ edit.name }}</td></tr>
+	<tr><td>Owner Email: </td><td>{{ edit.owner_email }}</td></tr>
+	<tr><td>Operating System: </td><td>{{ edit.operating_system }}</td></tr>
+	<tr><td>Graphics: </td><td>{{ edit.graphics }}</td></tr>
+	<tr><td>Processor: </td><td>{{ edit.processor }}</td></tr>
+	<tr><td>Notes: </td><td>{{ edit.notes }}</td></tr>
+	{% if not edit.confirmed %}
+	<tr>
+	  <td class="button" colspan="2"><input type="submit" value="Activate" /></td>
+	</tr>
+	{% endif %}
+      </table>
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% autoescape off %}Subject: [shell-perf] Activate {{ system.name }}
+From: {{ fromaddr }}
+To: {{ toaddr }}
+Date: {% now "r" %}
+
+Thanks for registering your system with the GNOME Shell performance
+statistics collector.
+
+  Name: {{ system.name }}
+  Owner Email: {{ system.owner_email }}
+  Operating System: {{ system.operating_system }}
+  Graphics: {{ system.graphics }}
+  Processor: {{ system.processor }}
+  Notes: {{ system.notes }}
+
+Please click on the following link to activate your new system:
+
+ {{ settings.BASE_URL }}{{ activation_link }}
+
+{% include "include/instructions.txt" %}
+{% endautoescape %}

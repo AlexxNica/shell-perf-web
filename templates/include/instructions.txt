@@ -1,0 +1,15 @@
+Instructions
+============
+
+To upload statistics from your system, create a file
+~/.config/gnome-shell/perf.ini with the following contents:
+
+--------------------------------------------------
+[perf]
+url={{ settings.BASE_URL }}
+key={{ system.secret_key }}
+--------------------------------------------------
+
+Then you can upload statistics by running:
+
+ ./gnome-shell --replace --perf=core --perf-warmup --perf-iters=3 --perf-upload

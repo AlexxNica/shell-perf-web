@@ -1,0 +1,26 @@
+{% if report_table.rows %}
+<table class="metric-table">
+  <thead>
+    <tr class="header-row">
+      <th class="header-row-first"></th>
+      {% for header in report_table.col_headers %}
+      {% if header.link %}
+      <th><a href="{{header.link}}">{{ header.name }}</a></th>
+      {% else %}
+      <th>{{ header.name }}</th>
+      {% endif %}
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in report_table.rows %}
+    <tr class="metric-row metric-row-{% cycle 'odd' 'even' %}">
+      <th title="{{ row.metric.description }}">{{ row.metric.name }}</th>
+      {% for v in row.values %}
+      <td>{{ v }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}

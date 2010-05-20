@@ -1,0 +1,172 @@
+body {
+    background: #ffffdd;
+}
+
+a {
+    color: #884444;
+}
+
+a:visited {
+    color: #444444;
+}
+
+#sidebar {
+    width: 11em;
+    margin-left: 1em;
+    float: left;
+    border: 1px solid #888888;
+    background: white;
+    height: 100%;
+}
+
+#sidebarInner {
+    padding: 1em;
+}
+
+#sidebarInner ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#sidebarInner li {
+    list-style: none;
+    margin-bottom: 0.25em;
+}
+
+#main {
+    width: 50em;
+    margin-left: 15em;
+}
+
+#about {
+    border: 1px solid #888888;
+    background: white;
+    padding: 1em 1em 0em 1em;
+    font-size: 90%;
+    margin-bottom: 1em;
+}
+
+#about p {
+    margin-top: 0em;
+    margin-bottom: 1em;
+}
+
+#infoGroup {
+    border: 1px solid #888888;
+    background: white;
+    padding: 1em;
+}
+
+#infoInner {
+}
+
+#systemInfo {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#systemInfo .field-label {
+    width: 20%;
+    text-align: right;
+}
+
+#systemInfo .field-widget {
+    width: 80%;
+}
+
+#systemInfo .field-help {
+    font-size: smaller;
+    color: #662222;
+    padding-bottom: 1em;
+}
+
+#systemInfo .errorlist {
+    color: red;
+    margin: 0px;
+    padding: 0px;
+}
+
+#systemInfo .errorlist li {
+    list-style: none;
+}
+
+#systemInfo textarea {
+    width: 100%;
+}
+
+#systemInfo input {
+    width: 100%;
+}
+
+#systemInfo .button {
+    text-align: right;
+    padding-top: 0.5em;
+}
+
+#systemInfo .button input {
+    width: 20%;
+    padding: 0.25em;
+}
+
+.filename {
+    white-space: nowrap;
+}
+
+.metric-table {
+    text-align: right;
+    margin-top: 1em;
+    background: white;
+    border-collapse: collapse;
+    border: 1px solid #aaaaaa;
+    margin-bottom: 1em;
+}
+
+.header-row th {
+    border-bottom: 1px solid black;
+}
+
+.metric-table a {
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.header-row-first {
+    border-right: 1px solid black;
+}
+
+.metric-row th {
+    border-right: 1px solid black;
+    padding-right: 0.25em;
+}
+
+.metric-row-odd {
+    background: white;
+}
+
+.metric-row-even {
+    background: #eeffee;
+}
+
+.metric-table td {
+    padding: 2px;
+}
+
+.form-error {
+    border: 1px solid #888888;
+    background: white;
+    padding: 0em 1em;
+    font-size: 90%;
+    margin-bottom: 1em;
+    color: red;
+}
+
+.form-error p {
+    font-size: 120%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.changes-header {
+    font-weight: bold;
+}

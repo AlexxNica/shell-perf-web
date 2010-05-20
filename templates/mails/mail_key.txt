@@ -1,0 +1,12 @@
+{% autoescape off %}Subject: [shell-perf] Secret key for {{ system.name }}
+From: {{ fromaddr }}
+To: {{ toaddr }}
+Date: {% now "r" %}
+
+The secret key for {{ system.name }} is:
+
+ {{ system.secret_key }}
+
+{% include "include/instructions.txt" %}
+{% endautoescape %}
+

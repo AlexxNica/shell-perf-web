@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2>All Systems</h2>
+<table>
+  {% for system in systems %}
+  <tr>
+    <td><a href="system/{{ system.name }}">{{ system.name }}</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% autoescape off %}Subject: [shell-perf] Changes to {{ system.name }}
+From: {{ fromaddr }}
+To: {{ toaddr }}
+Date: {% now "r" %}
+
+The following changes have been submitted to {{ system.name }}
+({{ settings.BASE_URL }}system/{{ system.name  }})
+
+{% ifnotequal edit.name system.name %}Name:
+    Old: {{ system.name }}
+    New: {{ edit.name }}
+{% endifnotequal %}{% ifnotequal edit.owner_email system.owner_email %}Owner Email:
+    Old: {{ system.name }}
+    New: {{ edit.name }}
+{% endifnotequal %}{% ifnotequal edit.operating_system system.operating_system %}Operating System:
+    Old: {{ system.operating_system }}
+    New: {{ edit.operating_system }}
+{% endifnotequal %}{% ifnotequal edit.graphics system.graphics %}Graphics:
+    Old: {{ system.graphics }}
+    New: {{ edit.graphics }}
+{% endifnotequal %}{% ifnotequal edit.name system.name %}Processor:
+    Old: {{ system.processor }}
+    New: {{ edit.processor }}
+{% endifnotequal %}{% ifnotequal edit.notes system.notes %}Notes:
+    Old: {{ system.notes }}
+    New: {{ edit.notes }}
+{% endifnotequal %}
+Please click on the following link to confirm the changes:
+
+ {{ settings.BASE_URL }}{{ confirm_link }}
+{% endautoescape %}
+

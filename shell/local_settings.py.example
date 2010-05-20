@@ -1,0 +1,42 @@
+# -*- mode: Python -*-
+
+# Uncomment if debugging the application for more verbose output from the web interface
+# when errors occur
+#DEBUG = True
+#TEMPLATE_DEBUG = DEBUG
+
+# Make this unique, and don't share it with anybody. You can generate
+# it with something like:
+#
+#  head -c 32 /dev/random | python -c 'import sys, base64; data = sys.stdin.read(); print base64.b64encode(data)'
+#
+SECRET_KEY = ''
+
+# Base URL for the application
+BASE_URL = ''
+
+# Directory where the sources for shell-perf lives
+APP_ROOT = ''
+
+# Directory writeable by apache process, used for uploaded data such as performance reports
+DATA_ROOT = ''
+
+DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = ''             # Or path to database file if using sqlite3.
+DATABASE_USER = ''             # Not used with sqlite3.
+DATABASE_PASSWORD = ''         # Not used with sqlite3.
+DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+# Local time zone for this installation. Choices can be found here:
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# although not all choices may be available on all operating systems.
+# If running in a Windows environment this must be set to the same as your
+# system time zone.
+TIME_ZONE = 'UTC'
+
+# SMTP Server to use to send mail
+SMTP_SERVER = ''
+
+# Sender of mail
+MAIL_FROM = 'noreply@gnome.org'

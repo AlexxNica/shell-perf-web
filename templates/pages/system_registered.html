@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2>{{edit.name}} Registered</h2>
+<div id="about">
+  <p>
+    An activation link has been mailed to {{ edit.owner_email }}.
+  </p>
+</div>
+{% endblock %}

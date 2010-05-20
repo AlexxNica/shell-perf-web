@@ -1,0 +1,21 @@
+<div id="sidebar">
+  <div id="sidebarInner">
+    <ul>
+      {% ifequal page 'home' %}
+      <li>Home</li>
+      {% else %}
+      <li><a href="home">Home</a></li>
+      {% endifequal %}
+      {% ifequal page 'systems' %}
+      <li>All Systems</li>
+      {% else %}
+      <li><a href="systems">All Systems</a></li>
+      {% endifequal %}
+      {% ifequal page 'register' %}
+      <li>Register</li>
+      {% else %}
+      <li><a href="register">Register</a></li>
+      {% endifequal %}
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div id="infoGroup">
+  <div id="infoInner">
+    {% if mailed %}
+    <p>
+      The secret key for {{ system.name }} has been mailed to {{ system.owner_email }}.
+    </p>
+    {% else %}
+    <p>
+      The secret key for a registered system is used to upload reports for the
+      system. Click the button below to mail the secret key for {{ system.name }}
+      to {{ system.owner_email }}.
+    </p>
+    <form action="system/{{ system.name }}/mail_key" method="post">
+      <input type="submit" value="Mail Key" />
+    </form>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

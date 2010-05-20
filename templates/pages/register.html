@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2>Register a system</h2>
+<div id="about">
+  <p>
+    Before submitting performance runs to the GNOME Shell
+    performance statistics collector, you must register your
+    system. You will be emailed an activation link and a secret
+    key that you add to <tt class="filename">~/.config/gnome-shell/perf.ini</tt>.
+  </p>
+  <p>
+    If you change your system significantly (upgrade to a new
+    version of the operating system, upgrade the graphics card),
+    you should register it again.
+  </p>
+</div>
+{% include "include/system_form.html" %}
+{% endblock %}

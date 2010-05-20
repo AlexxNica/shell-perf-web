@@ -1,0 +1,33 @@
+<div id="infoGroup">
+  <div id="infoInner">
+    <form action="{{ form.action }}" method="post">
+      <table id="systemInfo">
+	{% for field in form %}
+	<tr>
+	  <td class="field-label">{{ field.label_tag }}</td>
+	  <td class="field-widget">{{ field }}</td>
+	</tr>
+	{% if field.errors %}
+	<tr>
+	  <td></td>
+	  <td colspan="2" class="field-errors">
+	    {{ field.errors }}
+	  </td>
+	</tr>
+	{% endif %}
+	{% if field.help_text %}
+	<tr>
+	  <td></td>
+	  <td class="field-help">
+	    {{ field.help_text }}
+	  </td>
+	</tr>
+	{% endif %}
+	{% endfor %}
+	<tr>
+	  <td class="button" colspan="2"><input type="submit" value="{{ form_submit }}" /></td>
+	</tr>
+      </table>
+    </form>
+  </div>
+</div>

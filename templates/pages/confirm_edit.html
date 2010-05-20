@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% if edit.confirmed %}
+<h2>Changes to {{ system.name }} confirmed</h2>
+
+<div id="about">
+  <p>
+    <a href="system/{{ system.name }}">Return to system view</a>
+  </p>
+</div>
+{% else %}
+<h2>Confirm changes to {{ system.name }}</h2>
+<div id="infoGroup">
+  <div id="infoInner">
+    <form action="confirm_edit" method="post">
+      <div style="display: none">
+	<input type="hidden" name="edit" value="{{ edit.id }}" />
+	<input type="hidden" name="auth" value="{{ auth }}" />
+      </div>
+      <table>
+	{% ifnotequal edit.name system.name %}
+	<tr><td class="changes-header" >Name</td></tr>
+	<tr><td>Old:</td><td>{{ system.name }}</td></tr>
+	<tr><td>New:</td><td>{{ edit.name }}</td></tr>
+	{% endifnotequal %}
+	{% ifnotequal edit.owner_email system.owner_email %}
+	<tr><td class="changes-header" >Owner Email</td></tr>
+	<tr><td>Old</td><td>{{ system.owner_email }}</td></tr>
+	<tr><td>New:</td><td>{{ edit.owner_email }}</td></tr>
+	{% endifnotequal %}
+	{% ifnotequal edit.operating_system system.operating_system %}
+	<tr><td class="changes-header" colspan="2">Operating System</td></tr>
+	<tr><td>Old:</td><td>{{ system.operating_system }}</td></tr>
+	<tr><td>New:</td><td>{{ edit.operating_system }}</td></tr>
+	{% endifnotequal %}
+	{% ifnotequal edit.graphics system.graphics %}
+	<tr><td class="changes-header" colspan="2">Graphics</td></tr>
+	<tr><td>Old:</td><td>{{ system.graphics }}</td></tr>
+	<tr><td>New:</td><td>{{ edit.graphics }}</td></tr>
+	{% endifnotequal %}
+	{% ifnotequal edit.processor system.processor %}
+	<tr><td>Processor</td></tr>
+	<tr><td>Old:</td><td>{{ system.processor }}</td></tr>
+	<tr><td>New:</td><td>{{ edit.processor }}</td></tr>
+	{% endifnotequal %}
+	{% ifnotequal edit.notes system.notes %}
+	<tr><td class="changes-header" colspan="2">Notes</td></tr>
+	<tr><td>Old:</td><td>{{ system.notes }}</td></tr>
+	<tr><td>New:</td><td>{{ edit.notes }}</td></tr>
+	{% endifnotequal %}
+	<tr>
+	  <td class="button" colspan="2"><input type="submit" value="Confirm" /></td>
+	</tr>
+      </table>
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

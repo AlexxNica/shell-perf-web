@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2>Administer {{ system.name }}</h2>
+<table>
+  <tr><td>Owner Email: </td><td>{{ system.owner_email }}</td></tr>
+  <tr><td>Operating System: </td><td>{{ system.operating_system }}</td></tr>
+  <tr><td>Graphics: </td><td>{{ system.graphics }}</td></tr>
+  <tr><td>Processor: </td><td>{{ system.processor }}</td></tr>
+  <tr><td>Notes: </td><td>{{ system.notes }}</td></tr>
+</table>
+
+<p><a href="system/{{ system.name }}/edit">Edit this system</a></p>
+<p><a href="system/{{ system.name }}/mail_key">Mail secret key</a></p>
+
+{% endblock %}

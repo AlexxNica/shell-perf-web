@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2>Edit {{ system.name }}</h2>
+
+<div id="about">
+  <p>
+    This page allows you to edit the information about a system; Once you click
+    "Submit" a mail will be sent to {{system.owner_email}} to confirm the change.
+  </p>
+  <p>
+    <b>Note</b>: if the system configuration has been significantly modified
+    (new version of the operating system, new graphics card), then you should
+    register a new system rather than editing the existing system.
+  </p>
+</div>
+
+{% if no_changes %}
+<div class="form-error">
+  <p>No Changes</p>
+</div>
+{% endif %}
+
+{% include "include/system_form.html" %}
+{% endblock %}

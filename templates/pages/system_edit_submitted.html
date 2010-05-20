@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2>Changes to {{ system.name}} submitted</h2>
+<div id="about">
+  <p>
+    An confirmation link has been mailed to {{ system.owner_email }}.
+  </p>
+</div>
+{% endblock %}
