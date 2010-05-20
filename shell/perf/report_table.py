@@ -36,7 +36,8 @@ class ReportTable:
             for report in self.reports:
                 report_metrics = metrics_by_report[report]
                 if metric.name in report_metrics:
-                    values.append(metric.value)
+                    m = report_metrics[metric.name]
+                    values.append(m.value)
                 else:
                     values.append(None)
 
