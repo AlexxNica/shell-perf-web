@@ -2,7 +2,10 @@ from cStringIO import StringIO
 import datetime
 from gzip import GzipFile
 import hmac
-import json
+try:
+    import json
+except:
+    import simplejson as json
 import re
 
 from django.shortcuts import render_to_response

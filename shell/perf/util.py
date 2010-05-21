@@ -55,11 +55,28 @@ class _sha1_adapter:
 def hmac_sha1(key, msg=None):
     return hmac.new(key, msg, digestmod=_sha1_adapter)
 
+_ISO_DATE_RE = re.compile('^(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+)(?:\.(\d+))?$')
+
+# Parse the subset of ISO 8601 date formats that datetime.isoformat() produces
 def parse_isodate(s):
-    try:
-        return datetime.strptime(s, "%Y-%m-%dT%H:%M:%S")
-    except ValueError:
-        return datetime.strptime(s, "%Y-%m-%dT%H:%M:%S.%f")
+    m = _ISO_DATE_RE.match(s)
+    if m is None:
+        raise ValueError("Can't parse '%s' as an ISO date" % s)
+
+    if m.group(7) is not None:
+        seconds_us = float(m.group(6) + "." + m.group(7))
+        seconds = int(seconds_us)
+        us = int(round(1000000 * (seconds_us - seconds)))
+    else:
+        seconds = int(m.group(6))
+        us = 0
+
+    return datetime(int(m.group(1)),
+                    int(m.group(2)),
+                    int(m.group(3)),
+                    int(m.group(4)),
+                    int(m.group(5)),
+                    seconds, us)
 
 def _hex(byte):
     digits = '0123456789abcdef'
