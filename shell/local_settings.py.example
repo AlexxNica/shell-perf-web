@@ -12,7 +12,7 @@
 #
 SECRET_KEY = ''
 
-# Base URL for the application
+# Base URL for the application. Should have a trailing slash
 BASE_URL = ''
 
 # Directory where the sources for shell-perf lives
