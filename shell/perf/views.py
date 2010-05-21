@@ -282,12 +282,21 @@ def system_mail_key(request, system_name):
                                 'mailed': mailed,
                                 'system': system })
 
+# Failsafe to prevent memory exhaustion when reading report into memory
+# or parsing JSON. We store the report gzip'ed so disk space usage
+# will be significantly less than this.
+MAX_CONTENT_LENGTH = 4 * 1024 * 1024
+
 @require_POST
 def system_upload(request, system_name):
     try:
         system = System.objects.get(name=system_name)
     except System.DoesNotExist:
         raise Http404
+
+    content_length = int(request.META['CONTENT_LENGTH'])
+    if content_length > MAX_CONTENT_LENGTH:
+        return HttpResponseBadRequest("Report too big")
 
     try:
         signed_request.check_signature(request, system.secret_key)
