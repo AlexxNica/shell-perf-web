@@ -26,7 +26,7 @@ def check_signature(request, secret_key):
         raise BadSignature("X-Shell-Signature header missing")
 
     sent_signature_header = request.META['HTTP_X_SHELL_SIGNATURE']
-    m = re.match(r'^\s*([^\s,]+)\s*,\s*(\S+)\s*$', sent_signature_header)
+    m = re.match(r'^\s*(\S+)\s+(\S+)\s*$', sent_signature_header)
     if not m:
         raise BadSignature("Can't parse X-Shell-Signature header")
 
