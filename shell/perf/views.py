@@ -176,9 +176,9 @@ def systems(request):
                                 'settings': settings,
                                 'systems': systems })
 
-def system_admin(request, name):
+def system_admin(request, system_name):
     try:
-        system = System.objects.get(name=name)
+        system = System.objects.get(name=system_name)
     except System.DoesNotExist:
         raise Http404
 
@@ -212,9 +212,9 @@ def _do_edit(system, form):
 
     return edit
 
-def system_edit(request, name):
+def system_edit(request, system_name):
     try:
-        system = System.objects.get(name=name)
+        system = System.objects.get(name=system_name)
     except System.DoesNotExist:
         raise Http404
 
@@ -261,9 +261,9 @@ def system_edit(request, name):
     finally:
         NameField.existing_ok_name = None
 
-def system_mail_key(request, name):
+def system_mail_key(request, system_name):
     try:
-        system = System.objects.get(name=name)
+        system = System.objects.get(name=system_name)
     except System.DoesNotExist:
         raise Http404
 
@@ -283,9 +283,9 @@ def system_mail_key(request, name):
                                 'system': system })
 
 @require_POST
-def system_upload(request, name):
+def system_upload(request, system_name):
     try:
-        system = System.objects.get(name=name)
+        system = System.objects.get(name=system_name)
     except System.DoesNotExist:
         raise Http404
 
@@ -334,7 +334,7 @@ def system_upload(request, name):
 
     report = Report(system=system, date=date)
     
-    filename = name + "-" + date.strftime("%Y%m%d-%H%M%S") + ".gz"
+    filename = system_name + "-" + date.strftime("%Y%m%d-%H%M%S") + ".gz"
     str_io = StringIO()
     gz = GzipFile(filename, mode="wb", fileobj=str_io)
     gz.write(reportContents.encode("UTF-8"))
@@ -361,9 +361,9 @@ def system_upload(request, name):
 
     return HttpResponse("Report upload succeeded", 'text/plain; charset=UTF-8"', 200)
 
-def system_view(request, name):
+def system_view(request, system_name):
     try:
-        system = System.objects.get(name=name)
+        system = System.objects.get(name=system_name)
     except System.DoesNotExist:
         raise Http404
 
