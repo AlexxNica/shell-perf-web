@@ -1,0 +1,20 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">shell-perf-web</name>
+  <shortdesc xml:lang="en">GNOME Shell Performance Statistics Collector</shortdesc>
+  <homepage rdf:resource="http://shell-perf.gnome.org" />
+  <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/gnome-shell-list" />
+  <category rdf:resource="http://api.gnome.org/doap-extensions#infrastructure" />
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Owen Taylor</foaf:name>
+      <foaf:mbox rdf:resource="mailto:otaylor@redhat.com" />
+      <gnome:userid>otaylor</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+</Project>
