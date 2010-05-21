@@ -67,6 +67,15 @@ a:hover {
     padding-left: 27px;
 }
 
+/* 404/500 errors */
+
+.page-error {
+   background: #eeeeff;
+   border: 1px solid #888888;
+   margin-top: 3em;
+   padding: 0em 1em;
+}
+
 /* Sidebar */
 
 #logo {
