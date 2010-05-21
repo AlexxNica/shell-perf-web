@@ -1,26 +1,94 @@
 body {
-    background: #ffffdd;
+    background: white;
 }
 
+/* Anchors */
 a {
-    color: #884444;
+    color: #3465a4;
+    text-decoration: none;
 }
 
-a:visited {
-    color: #444444;
+a:hover {
+    text-decoration: underline;
+}
+
+/* Common GNOME Top bar */
+#gnome-sites {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+
+    list-style: none;
+    background: #2E3436 url(sites-bg.png) 0 100% repeat-x;
+    text-align: right;
+    padding: 0 1ex;
+    margin: 0;
+    font-size: 70%;
+}
+
+#gnome-sites ul {
+    margin: 0;
+    padding: 0;
+}
+
+#gnome-sites li {
+    display: inline;
+    background: url(sites-sp.png) 0 0 no-repeat;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+#gnome-sites li a {
+    font-weight: bold;
+    color: #FFFFFF;
+    margin: 0 2ex;
+    text-decoration: none;
+    line-height: 30px;
+}
+
+#gnome-sites li a:hover {
+    text-decoration: underline;
+}
+
+#gnome-sites .home {
+    float: left;
+    background: url(sites-sp.png) 100% 0 no-repeat;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#gnome-sites .home a {
+    float: left;
+    background: url(sites-foot.png) 7px 50% no-repeat;
+    margin-left: 0;
+    padding-left: 27px;
+}
+
+/* Sidebar */
+
+#logo {
+    background-image: url('gnome-logo.png');
+    width: 199px;
+    height: 76px;
+    margin-bottom: 1em;
 }
 
 #sidebar {
-    width: 11em;
-    margin-left: 1em;
+    width: 250px;
     float: left;
-    border: 1px solid #888888;
-    background: white;
     height: 100%;
 }
 
 #sidebarInner {
     padding: 1em;
+}
+
+#sidebarHeader {
+    font-size: 125%;
+    margin-bottom: 1em;
 }
 
 #sidebarInner ul {
@@ -36,13 +104,12 @@ a:visited {
 
 #main {
     width: 50em;
+    margin-top: 2.5em;
     margin-left: 15em;
 }
 
 #about {
-    border: 1px solid #888888;
     background: white;
-    padding: 1em 1em 0em 1em;
     font-size: 90%;
     margin-bottom: 1em;
 }
@@ -52,59 +119,64 @@ a:visited {
     margin-bottom: 1em;
 }
 
-#infoGroup {
+.system-info {
+    margin-bottom: 1em;
+}
+
+#formGroup {
     border: 1px solid #888888;
     background: white;
     padding: 1em;
 }
 
-#infoInner {
+#formInner {
 }
 
-#systemInfo {
+#systemForm {
     table-layout: fixed;
-    width: 100%;
 }
 
-#systemInfo .field-label {
+#systemForm .field-label {
     width: 20%;
     text-align: right;
+    padding-right: 0.5em;
+    color: #666666;
 }
 
-#systemInfo .field-widget {
+#systemForm .field-widget {
     width: 80%;
 }
 
-#systemInfo .field-help {
+#systemForm .field-help {
     font-size: smaller;
-    color: #662222;
+    color: #222266;
     padding-bottom: 1em;
 }
 
-#systemInfo .errorlist {
+#systemForm .errorlist {
     color: red;
     margin: 0px;
     padding: 0px;
 }
 
-#systemInfo .errorlist li {
+#systemForm .errorlist li {
     list-style: none;
 }
 
-#systemInfo textarea {
+#systemForm textarea {
     width: 100%;
 }
 
-#systemInfo input {
+#systemForm input {
     width: 100%;
 }
 
-#systemInfo .button {
+#systemForm .button {
     text-align: right;
     padding-top: 0.5em;
 }
 
-#systemInfo .button input {
+#systemForm .button input {
     width: 20%;
     padding: 0.25em;
 }
@@ -115,7 +187,6 @@ a:visited {
 
 .metric-table {
     text-align: right;
-    margin-top: 1em;
     background: white;
     border-collapse: collapse;
     border: 1px solid #aaaaaa;
@@ -126,9 +197,9 @@ a:visited {
     border-bottom: 1px solid black;
 }
 
-.metric-table a {
+.metric-table th {
     font-weight: normal;
-    text-decoration: none;
+    color: #666666;
 }
 
 .header-row-first {

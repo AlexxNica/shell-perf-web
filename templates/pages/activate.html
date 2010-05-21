@@ -20,14 +20,14 @@
     be edited once the system is activated.
   </p>
 </div>
-<div id="infoGroup">
-  <div id="infoInner">
+<div id="formGroup">
+  <div id="formInner">
     <form action="activate" method="post">
       <div style="display: none">
 	<input type="hidden" name="edit" value="{{ edit.id }}" />
 	<input type="hidden" name="auth" value="{{ auth }}" />
       </div>
-      <table>
+      <table class="system-info">
 	<tr><td>Name: </td><td>{{ edit.name }}</td></tr>
 	<tr><td>Owner Email: </td><td>{{ edit.owner_email }}</td></tr>
 	<tr><td>Operating System: </td><td>{{ edit.operating_system }}</td></tr>
