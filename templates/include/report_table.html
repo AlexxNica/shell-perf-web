@@ -15,7 +15,7 @@
   <tbody>
     {% for row in report_table.rows %}
     <tr class="metric-row metric-row-{% cycle 'odd' 'even' %}">
-      <th title="{{ row.metric.description }}">{{ row.metric.name }}</th>
+      <th title="{{ row.metric.description }} ({{row.metric.units}})">{{ row.metric.name }}</th>
       {% for v in row.values %}
       <td>{{ v }}</td>
       {% endfor %}
