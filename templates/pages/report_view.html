@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<table class="report-info">
+  <tr>
+    <td>System:</td>
+    <td><a href="system/{{ report.system.name }}">{{ report.system.name }}</a></td>
+  </tr>
+  <tr>
+    <td>Date:</td>
+    <td>{{ report.date|date:"Y-m-d H:i" }}</td>
+  </tr>
+  <tr>
+    <td>Revision:</td>
+    <td>{{ report_json.revision|slice:":10" }}</td>
+  </tr>
+  <tr>
+    <td>Monitor layout:</td>
+    <td>{{ report_json.monitors|join:" " }}</td>
+  </tr>
+</table>
+
+{% include "include/report_table.html" %}
+
+{% endblock %}

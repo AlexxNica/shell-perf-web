@@ -8,6 +8,10 @@ urlpatterns = patterns('',
                        (r'^confirm_edit$', 'shell.perf.views.confirm_edit'),
                        (r'^home$', 'shell.perf.views.home'),
                        (r'^register$', 'shell.perf.views.register'),
+                       # The system name is included in the report URls only to make the
+                       # the URLs more self-documenting
+                       (r'^report/(?P<system_name>[^/]+)/(?P<report_id>\d+)/json$', 'shell.perf.views.report_json'),
+                       (r'^report/(?P<system_name>[^/]+)/(?P<report_id>\d+)$', 'shell.perf.views.report_view'),
                        (r'^system/(?P<system_name>[^/]+)/admin$', 'shell.perf.views.system_admin'),
                        (r'^system/(?P<system_name>[^/]+)/edit$', 'shell.perf.views.system_edit'),
                        (r'^system/(?P<system_name>[^/]+)/mail_key$', 'shell.perf.views.system_mail_key'),

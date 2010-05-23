@@ -15,7 +15,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbid
 from django.views.decorators.http import require_POST
 
 from models import Metric, System, SystemEdit, Report
-from report_table import ReportTable
+from report_table import ReportTable, RunTable
 from system_form import SystemForm, NameField
 import signed_request
 import util
@@ -212,6 +212,45 @@ def _do_edit(system, form):
 
     return edit
 
+def report_json(request, system_name, report_id):
+    try:
+        report = Report.objects.get(id=report_id)
+    except Report.DoesNotExist:
+        raise Http404
+
+    if system_name != report.system.name:
+        raise Http404
+
+    response = HttpResponse(mimetype="application/json")
+
+    gunzip = GzipFile(report.upload.path, "r")
+    reportContents = gunzip.read()
+
+    return HttpResponse(reportContents, mimetype="application/json")
+
+def report_view(request, system_name, report_id):
+    try:
+        report = Report.objects.get(id=report_id)
+    except Report.DoesNotExist:
+        raise Http404
+
+    if system_name != report.system.name:
+        raise Http404
+
+    gunzip = GzipFile(report.upload.path, "r")
+    report_contents = gunzip.read()
+    report_json = json.loads(report_contents)
+
+    run_table = RunTable(report_json)
+
+    return render_to_response('pages/report_view.html',
+                              { 'page': 'report_view',
+                                'page_title': report.system.name,
+                                'settings': settings,
+                                'report': report,
+                                'report_json': report_json,
+                                'report_table': run_table})
+
 def system_edit(request, system_name):
     try:
         system = System.objects.get(name=system_name)
@@ -381,7 +420,8 @@ def system_view(request, system_name):
     report_table = ReportTable()
     for report in reports:
         report_table.add_report(report,
-                                report.date.strftime("%y-%m-%d"))
+                                report.date.strftime("%y-%m-%d"),
+                                "report/%s/%d" % (system.name, report.id))
 
     return render_to_response('pages/system_view.html',
                               { 'page': 'system_view',

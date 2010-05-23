@@ -48,3 +48,50 @@ class ReportTable:
     def rows(self):
         self.__get_data()
         return self.__rows
+
+# This provides an identical interface to ReportTable, but instead
+# of comparing reports, it compares runs in one report
+class RunTable:
+    def __init__(self, report_json):
+        self.json = report_json
+        self.reports = []
+        self.__col_headers = None
+        self.__rows = None
+
+    def __get_data(self):
+        if self.__rows != None:
+            return
+
+        self.__col_headers = []
+        self.__rows = []
+
+        metrics = self.json['metrics']
+        metric_names = sorted(metrics.keys())
+
+        if len(metric_names) == 0:
+            return
+
+        first_metric = metrics[metric_names[0]]
+        self.__col_headers = []
+        for i in xrange(0, len(first_metric['values'])):
+            self.__col_headers.append({ 'name': "Run %d" % (i + 1),
+                                        'link': None })
+
+        for name in metric_names:
+            metric = metrics[name]
+            # For ReportTable, row.metric is a Metric object, here it's just a dictionary
+            # that looks much the same to to the template
+            self.__rows.append({ 'metric': { 'name': name,
+                                             'description': metric['description'],
+                                             'units': metric['units'] },
+                                 'values': metric['values'] })
+
+    @property
+    def col_headers(self):
+        self.__get_data()
+        return self.__col_headers
+
+    @property
+    def rows(self):
+        self.__get_data()
+        return self.__rows

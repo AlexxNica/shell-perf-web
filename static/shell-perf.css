@@ -132,6 +132,10 @@ a:hover {
     margin-bottom: 1em;
 }
 
+.report-info {
+    margin-bottom: 1em;
+}
+
 #formGroup {
     border: 1px solid #888888;
     background: white;
