@@ -11,6 +11,10 @@
     {% include "include/header.html" %}
     <div id="content">
       {% include "include/sidebar.html" %}
+      <div id="lowerLeft">
+	{% block lowerleft %}
+	{% endblock %}
+      </div>
       <div id="main">
 	{% block main %}
 	{% endblock %}

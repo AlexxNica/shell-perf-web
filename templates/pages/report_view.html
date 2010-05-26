@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block main %}
+{% block lowerleft %}
 
 <table class="report-info">
   <tr>
@@ -20,7 +20,49 @@
     <td>{{ report_json.monitors|join:" " }}</td>
   </tr>
 </table>
-
 {% include "include/report_table.html" %}
+
+{% endblock %}
+
+{% block main %}
+
+<div class="event-log-header">
+<span class="event-log-title">Event Log</span>
+<select id="eventLogSelect" type="select" onchange="eventLog.setRun(this.value);">
+<option value="0">Run 1</choice>
+<option value="1">Run 2</choice>
+<option value="2">Run 3</choice>
+</select>
+</div>
+
+<div id="eventLogGroup">
+  <div id="eventLogButtons">
+    <input type="button" value="+" onclick="eventLog.zoom(2)"></input><br />
+    <input type="button" value="-" onclick="eventLog.zoom(0.5)"></input>
+  </div>
+  <canvas id="eventLogCanvas" width="600", height="600">
+</div>
+
+<script type="text/javascript" src="static/log_viewer.js"> </script>
+<script type="text/javascript">
+  var canvas = document.getElementById("eventLogCanvas");
+
+  var eventLog = new LogViewer(canvas);
+  document.getElementById("eventLogSelect").value = 0; // Reset on page reload
+  eventLog.load("{{ settings.BASE_URL }}report/{{report.system.name}}/{{report.id}}/json");
+
+  function resize() {
+     var main = document.getElementById("main");
+     var eventLogGroup = document.getElementById("eventLogGroup");
+     canvas.width = main.clientWidth - 2;
+     canvas.height = main.clientHeight - eventLogGroup.offsetTop - 2;
+
+     eventLog.redraw();
+  }
+
+  resize();
+  window.onresize = resize;
+
+</script>
 
 {% endblock %}

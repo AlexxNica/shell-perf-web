@@ -16,6 +16,16 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Utility classes */
+
+.grab {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
 /* Common GNOME Top bar */
 #gnome-sites {
     position: absolute;
@@ -113,6 +123,11 @@ a:hover {
 #sidebarInner li {
     list-style: none;
     margin-bottom: 0.25em;
+}
+
+#lowerLeft {
+    float: left;
+    clear: left;
 }
 
 #main {
@@ -256,4 +271,55 @@ a:hover {
 
 .changes-header {
     font-weight: bold;
+}
+
+/* Report view and event log */
+
+body.report_view #main {
+    position: absolute;
+    top: 2.5em;
+    left: 0px;
+    right: 8px;
+    bottom: 8px;
+
+    overflow: hidden;
+    margin-left: 28em;
+    width: auto;
+}
+
+body.report_view .metric-table {
+    font-size: smaller;
+}
+
+.event-log-header {
+    padding-bottom: 0.5em;
+}
+
+.event-log-title {
+    font-size: 130%;
+}
+
+#eventLogSelect {
+    float: right;
+}
+
+#eventLogGroup {
+    position: relative;
+}
+
+#eventLogButtons {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    z-index: 1;
+}
+
+#eventLogButtons input {
+    width: 2em;
+    height: 2em;
+    margin: 0.25em;
+}
+
+#eventLogCanvas {
+    border: 1px solid #888888;
 }
