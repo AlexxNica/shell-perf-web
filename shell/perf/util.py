@@ -55,7 +55,7 @@ class _sha1_adapter:
 def hmac_sha1(key, msg=None):
     return hmac.new(key, msg, digestmod=_sha1_adapter)
 
-_ISO_DATE_RE = re.compile('^(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+)(?:\.(\d+))?$')
+_ISO_DATE_RE = re.compile('^(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+)(?:\.(\d+))?Z?$')
 
 # Parse the subset of ISO 8601 date formats that datetime.isoformat() produces
 def parse_isodate(s):
