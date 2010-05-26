@@ -30,8 +30,10 @@ EventPainter.prototype = {
 	this.nextI = -1;
 	this.pos = null;
 	this.lastPos = null;
-	this.lastLabelPos = null;
 	this.nextPos = null;
+
+	this.skippedEvents = [];
+	this.skipDrawPos = null;
 
 	this.advance();
 	this.advance();
@@ -50,6 +52,17 @@ EventPainter.prototype = {
 	    var e = this.log[this.nextI];
 	    if (this.predicate(e)) {
 		this.nextPos = this.getPos(e[0]);
+		if (this.nextPos - this.pos <= LABEL_SPACE &&
+		    this.lastPos == null || this.pos - this.lastPos > LABEL_SPACE) {
+		    // Within a consecutive run of events that are too close together to
+		    // draw labels, we draw '<...>' indicators at a regular grid starting
+		    // at a position based on the first event position; whatever method
+		    // we use, we need to make sure that the position where we draw the
+		    // indicators doesn't depend on the scroll position
+		    if (this.skippedEvents.length > 0)
+			this._flushSkip();
+		    this.skipDrawPos = this.pos;
+		}
 		return;
 	    }
 
@@ -60,21 +73,27 @@ EventPainter.prototype = {
 	this.nextPos = null;
     },
 
+    _flushSkip: function() {
+	this.paintLabel(this.skipDrawPos + LABEL_SPACE / 2, '<...>', this.skippedEvents);
+	this.skippedEvents = [];
+    },
+
     paint: function() {
-	var label;
-	if ((this.lastPos == null || this.pos - this.lastPos > LABEL_SPACE) &&
-	    (this.nextPos == null || this.nextPos - this.pos > LABEL_SPACE)) {
-	    label = this.log[this.i][1];
-	} else {
-	    if (this.lastLabelPos == null || this.pos - this.lastLabelPos > LABEL_SPACE)
-		label = '<...>';
-	    else
-		label = null;
+	if (this.skippedEvents.length > 0) {
+	    if (this.pos >= this.skipDrawPos + LABEL_SPACE * 2) {
+		this._flushSkip();
+		this.skipDrawPos += 2 * LABEL_SPACE;
+	    }
 	}
 
-	if (label != null) {
+	var label = this.log[this.i][1];
+	if ((this.lastPos == null || this.pos - this.lastPos > LABEL_SPACE) &&
+	    (this.nextPos == null || this.nextPos - this.pos > LABEL_SPACE)) {
 	    this.paintLabel(this.pos, label);
-	    this.lastLabelPos = this.pos;
+	} else {
+	    this.skippedEvents.push(label);
+	    if (this.nextI == null)
+		this._flushSkip();
 	}
 
 	this.paintLine(this.pos);
@@ -193,6 +212,9 @@ LogViewer.prototype = {
 	this.canvas.addEventListener('mousedown',
 	                             bind(this, this._onMouseDown),
 				     false);
+	this.canvas.addEventListener('mousemove',
+	                             bind(this, this._onMouseMove),
+				     false);
 	this.canvas.addEventListener('DOMMouseScroll',
 	                             bind(this, this._onMouseScroll),
 				     true);
@@ -281,19 +303,30 @@ LogViewer.prototype = {
 	this.redraw();
     },
 
-    // Translate the coordinates from an event to be stage relative
-    _eventCoords: function(e) {
-	var x = e.clientX + window.scrollX;
-	var y = e.clientY + window.scrollY;
+    // Coordinates of canvas with respect to page
+    _pageCoords: function(e) {
+	var x = 0;
+	var y = 0;
 
 	var el = this.canvas;
 	do {
-	    x -= el.offsetLeft;
-	    y -= el.offsetTop;
+	    x += el.offsetLeft;
+	    y += el.offsetTop;
 	    el = el.offsetParent;
 	} while (el);
 
-	return {x: x, y: y};
+	return { x: x, y: y };
+    },
+
+    // Translate the coordinates from an event to be stage relative
+    _eventCoords: function(e) {
+	var coords = this._pageCoords();
+
+	// efficiency hack to avoid creating a new object
+	coords.x = e.clientX + window.scrollX - coords.x;
+	coords.y = e.clientY + window.scrollY - coords.y;
+
+	return coords;
     },
 
     _onMouseDown: function(e) {
@@ -392,6 +425,67 @@ LogViewer.prototype = {
 	grabDiv.addEventListener('mouseup', onMouseUp, false);
     },
 
+    _showTooltip: function(tooltip) {
+	if (this._tooltip == tooltip)
+	    return;
+
+	if (this._tooltip != null)
+	    this._hideTooltip();
+
+	this._tooltipDiv = document.createElement("div");
+	this._tooltipDiv.className = "event-tooltip";
+	document.body.appendChild(this._tooltipDiv);
+	var textNode = document.createTextNode(tooltip.events.join("\n"));
+	this._tooltipDiv.appendChild(textNode);
+
+	var pageCoords = this._pageCoords();
+
+	var x = pageCoords.x + tooltip.x2 + 5;
+	var y = pageCoords.y + tooltip.y1;
+
+	// The + 2 is for the two pixel border
+	if (y + this._tooltipDiv.clientHeight + 2 > window.innerHeight)
+	    y = window.innerHeight - this._tooltipDiv.clientHeight - 2;
+	if (y < 0)
+	    y = 0;
+
+	this._tooltipDiv.style.left = x + 'px';
+	this._tooltipDiv.style.top = y + 'px';
+
+	this._tooltip = tooltip;
+    },
+
+    _hideTooltip: function() {
+	if (this._tooltip == null)
+	    return;
+
+	document.body.removeChild(this._tooltipDiv);
+	this._tooltipDiv = null;
+	this._tooltip = null;
+    },
+
+    _onMouseMove: function(e) {
+	if (!this.eventTooltips)
+	    return;
+
+	var coords = this._eventCoords(e);
+	var i;
+
+	var x = coords.x;
+	var y = coords.y;
+
+	for (i = 0; i < this.eventTooltips.length; i++) {
+	    var tooltip = this.eventTooltips[i];
+	    if (x >= tooltip.x1 && x < tooltip.x2 &&
+		y >= tooltip.y1 && y < tooltip.y2) {
+		this._showTooltip(tooltip);
+		return;
+	    }
+	}
+
+	this._hideTooltip();
+    },
+
     _onMouseScroll: function(e) {
 	e.preventDefault();
 	e.stopPropagation();
@@ -459,6 +553,20 @@ LogViewer.prototype = {
 	    return Math.floor(height * (t - me.zoomStart) / (me.zoomEnd - me.zoomStart));
 	}
 
+	this.eventTooltips = [];
+
+	function paintLabel(x, y, rightAlign, label, skippedEvents) {
+	    context.fillText(label, x, y);
+	    if (skippedEvents) {
+		var textWidth = context.measureText(label).width;
+		me.eventTooltips.push({ x1: rightAlign ? x - textWidth : x,
+					y1: y - LABEL_SPACE / 2,
+					x2: rightAlign ? x : x + textWidth,
+					y2: y + LABEL_SPACE / 2,
+					events: skippedEvents });
+	    }
+	}
+
 	var scriptPainter = new EventPainter({
 	    log: this.run.log,
 	    getPos: getY,
@@ -472,11 +580,11 @@ LogViewer.prototype = {
 		context.restore();
 		lastY = pos;
 	    },
-	    paintLabel: function(pos, label) {
+	    paintLabel: function(pos, label, skippedEvents) {
 		context.save();
 		context.textAlign = 'right';
 		context.fillStyle = '#0000ff';
-		context.fillText(label, width / 4 - 5, pos);
+		paintLabel(width / 4 - 5, pos, true, label, skippedEvents);
 		context.restore();
 	    }
 	});
@@ -493,8 +601,8 @@ LogViewer.prototype = {
 
 		lastY = pos;
 	    },
-	    paintLabel: function(pos, label) {
-		context.fillText(label, 2 * width / 4 + 5, pos);
+	    paintLabel: function(pos, label, skippedEvents) {
+		paintLabel(2 * width / 4 + 5, pos, false, label, skippedEvents);
 	    }
 	});
 

@@ -323,3 +323,13 @@ body.report_view .metric-table {
 #eventLogCanvas {
     border: 1px solid #888888;
 }
+
+.event-tooltip {
+    position: absolute;
+    border: 1px solid gray;
+    font-size: 70%;
+    white-space: pre-wrap;
+    background: #ddeeff;
+    opacity: 0.90;
+    padding: 0.5em;
+}
