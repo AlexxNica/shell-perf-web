@@ -2,6 +2,10 @@ body {
     background: white;
 }
 
+#content {
+    margin-top: 2.5em;
+}
+
 /* Anchors */
 a {
     color: #3465a4;
@@ -113,7 +117,6 @@ a:hover {
 
 #main {
     width: 50em;
-    margin-top: 2.5em;
     margin-left: 15em;
 }
 

@@ -7,12 +7,14 @@
     <link rel="stylesheet" type="text/css" href="/static/shell-perf.css" />
     <base href="{{ settings.BASE_URL }}home" />
   </head>
-  <body>
-    {% include "include/sidebar.html" %}
+  <body class="{{ page }}">
     {% include "include/header.html" %}
-    <div id="main">
-      {% block main %}
-      {% endblock %}
+    <div id="content">
+      {% include "include/sidebar.html" %}
+      <div id="main">
+	{% block main %}
+	{% endblock %}
+      </div>
     </div>
   </body>
 </html>
