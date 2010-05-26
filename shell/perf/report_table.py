@@ -24,11 +24,13 @@ def format_values(values, units):
     #
     # I've marked various arbitrary parameters below as TWEAKABLE
 
-    if len(values) == 0:
-        return []
-
-    high = max(max(values), - min(values))
+    set_values = [v for v in values if v is not None]
+    if len(set_values) == 0:
+        return ['' for v in values], units
+    high = max(max(set_values), - min(set_values))
+    diff = max(set_values) - min(set_values)
     suffix = ''
+    mult = 1
 
     if units in BYTE_UNITS:
         mult = BYTE_UNITS[units]
@@ -36,9 +38,7 @@ def format_values(values, units):
         # If we have a difference of only a few bytes, then
         # we don't want to display fractional K/M with a lot
         # of precision
-        diff = mult * (max(values) - min(values))
         if diff == 0 or diff > 100:
-
             # TWEAKABLE: transition points from B => K => M
             if high * mult >= 1024 * 1024:
                 mult = mult / (1024. * 1024.)
@@ -50,9 +50,6 @@ def format_values(values, units):
                 units = 'KiB'
             else:
                 units = 'B'
-
-        high = high * mult
-        values = [ mult * v for v in values ]
 
     elif units in TIME_UNITS:
         mult = TIME_UNITS[units]
@@ -67,8 +64,8 @@ def format_values(values, units):
             units = suffix = 'us'
             mult *= 1000000
 
-        high = high * mult
-        values = [ mult * v for v in values ]
+    high = high * mult
+    diff = diff * mult
 
     # Determine how many digits we need to avoid scientific notation
     if high == 0:
@@ -85,7 +82,6 @@ def format_values(values, units):
         # If we have multiple values, determine how many digits we need
         # to distinguish the values
         if len(values) > 1:
-            diff = max(values) - min(values)
             if diff > 0:
                 diff_digits = 1 + math.floor(math.log10(high)) - math.floor(math.log10(diff))
                 digits = max(digits, diff_digits)
@@ -98,7 +94,7 @@ def format_values(values, units):
         if v is None:
             result.append("")
         else:
-            result.append(format % (digits, v))
+            result.append(format % (digits, mult * v))
 
     return result, units
 
@@ -140,7 +136,7 @@ class ReportTable:
                     m = report_metrics[metric.name]
                     values.append(m.value)
                 else:
-                    values.append(m.value)
+                    values.append(None)
 
             formatted, units = format_values(values, metric.units)
             self.__rows.append({ 'metric': metric,
@@ -209,6 +205,10 @@ if __name__ == '__main__':
 
     # 0 length list
     test([], '', [])
+
+    # None values
+    test([None], '', [''])
+    test([None, 1], '', ['', '1'])
 
     # Test points at which we give up and use scientific notation
     test([0.00001], '', ['1e-05'])
