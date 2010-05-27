@@ -181,15 +181,15 @@ EventRun.prototype = {
 	    // perf.statisticsCollected is stored every time we collect
 	    // statistics, but repeated values are omitted, so store
 	    // *all* values into the arrays we are collecting
-	    if (event.name == 'perf.statisticsCollected') {
+	    if (name == 'perf.statisticsCollected') {
 		this.statTimes.push(time);
 		for (name in this.statistics) {
 		    statistic = this.statistics[name];
-		    statistic.values.push(event.currentValue);
+		    statistic.values.push(statistic.currentValue);
 		}
 	    }
 
-	    if (event.name == 'glx.swapComplete') {
+	    if (name == 'glx.swapComplete') {
 		// the argument is a time in microseconds since epoch
 		e[2] = (e[2] - start) / 1000000;
 	    }
